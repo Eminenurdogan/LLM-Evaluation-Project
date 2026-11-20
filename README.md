@@ -94,5 +94,120 @@ LLM-Evaluation-Project/
 ├── data/
 │   └── dataset.xlsx
 │
-├
+├── results/
+│   ├── evaluation_10_questions.xlsx
+│   ├── evaluation_100_questions.xlsx
+│   └── first_test_results.xlsx
+│
+├── scripts/
+│   ├── create_dataset.py
+│   ├── validate_dataset.py
+│   ├── test_api.py
+│   └── run_evaluation.py
+│
+├── .dockerignore
+├── .gitignore
+├── Dockerfile
+└── requirements.txt
 ```
+
+## Kurulum
+
+### 1. Repository'yi klonlayın
+
+```bash
+git clone https://github.com/Eminenurdogan/LLM-Evaluation-Project.git
+```
+
+```bash
+cd LLM-Evaluation-Project
+```
+
+### 2. Sanal ortam oluşturun
+
+Windows:
+
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+### 3. Gerekli kütüphaneleri yükleyin
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. API anahtarını tanımlayın
+
+Proje ana dizininde `.env` dosyası oluşturun:
+
+```env
+OPENROUTER_API_KEY=your_api_key
+```
+
+OpenRouter API anahtarı gereklidir. Gerçek API anahtarınızı GitHub'a yüklemeyin.
+
+### 5. Veri setini doğrulayın
+
+```bash
+python scripts/validate_dataset.py
+```
+
+### 6. Model değerlendirmesini başlatın
+
+```bash
+python scripts/run_evaluation.py
+```
+
+Değerlendirme tamamlandığında sonuçlar `results/evaluation_100_questions.xlsx` dosyasına kaydedilir.
+
+## Docker ile Çalıştırma
+
+Proje Docker kullanılarak konteyner ortamında çalıştırılabilecek şekilde hazırlanmıştır.
+
+### 1. Docker imajını oluşturun
+
+```bash
+docker build -t llm-evaluation-project .
+```
+
+### 2. API anahtarını tanımlayın
+
+PowerShell:
+
+```powershell
+$env:OPENROUTER_API_KEY="your_api_key"
+```
+
+### 3. Konteyneri çalıştırın
+
+PowerShell:
+
+```powershell
+docker run --rm -e OPENROUTER_API_KEY -v "${PWD}/results:/app/results" llm-evaluation-project
+```
+
+Bu komut değerlendirme sonuçlarının bilgisayarınızdaki `results` klasörüne kaydedilmesini sağlar.
+
+### 4. Veri setini Docker üzerinden doğrulayın
+
+```bash
+docker run --rm llm-evaluation-project python scripts/validate_dataset.py
+```
+
+## Güvenlik
+
+- API anahtarı `.env` dosyasında tutulur.
+- `.env` dosyası `.gitignore` ve `.dockerignore` içerisinde hariç tutulmuştur.
+- Sanal ortam dosyaları GitHub'a yüklenmez.
+
+## Geliştirici
+
+**Emine Nur Doğan**
+
+GitHub: https://github.com/Eminenurdogan
+
+## Lisans
+
+Bu proje eğitim ve araştırma amacıyla geliştirilmiştir.
